@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	
+	<link href="./resources/css/file.css" rel="stylesheet" type="text/css" />
+
+	<title>SEFAZ-PE</title>
+	<link rel="icon" 
+	      type="image/png" 
+	      href="./resources/imagens/sefaz-pe.png" />
+</h:head>
+
+<h:body>
+	
+	
+	<h:graphicImage library="imagens" name="logomarca.png" title="SEFAZ-PE"/>
+
+
+	<p:messages autoUpdate="true" id="msg"/>
+
+	<h:form id="form_cadastro">
+		
+		<h2>Secretaria da Fazenda de Pernambuco</h2>
+		
+		<p:messages autoUpdate="true" id="msg"/>
+		
+		<p:tabView>
+		
+			<p:tab title="Cadastro">
+			
+				<p:panel header="Cadastro de Usuario">
+				
+					<p:panelGrid columns="2">
+					
+						<p:outputLabel value="Nome" for="nome"/>
+						<p:inputText id="nome" required="true" requiredMessage="O nome é obrigatório!"
+						maxlength="20" value="${bean.pessoa.nome}" size="20"/>
+						
+						<p:outputLabel value="Email" for="email"/>
+						<p:inputText id="email" required="true" requiredMessage="O email é obrigatório!"
+						maxlength="20" value="${bean.pessoa.email}" size="20"/>
+						
+						<p:outputLabel value="Senha" for="senha"/>
+						<p:password id="senha" required="true" requiredMessage="A senha é obrigatória!"
+						feedback="true" weakLabel="Senha Fraca" goodLabel="Senha Razoável" strongLabel="Senha Forte"
+						promptLabel="Informe uma Senha!" match="confirma"
+						validatorMessage="As Senhas não são iguais..."
+						value="${bean.pessoa.senha}" size="20"/>
+			
+						<p:outputLabel value="Confirme a senha." for="confirma"/>
+						<p:password id="confirma" required="true"/>
+						
+						<p:commandButton value ="Adicionar" icon="pi pi-plus-circle" action="${bean.adicionar}" update="form_cadastro tabelaPessoa"/>
+						
+					</p:panelGrid>
+					
+				</p:panel>
+			
+			</p:tab>
+		
+			<p:tab title="Lista de Usuários">
+				<h2>Lista de Usuários</h2>
+		        <p:dataTable value="#{bean.pessoas}" var="p" border="1" id="tabelaPessoa" paginator="true" rows="10">
+		        
+			            <p:column headerText="Nome">
+			            	<p:outputLabel value="#{p.nome}"/>
+			            </p:column>
+			            
+			            <p:column headerText="Email">
+			            	<p:outputLabel value="#{p.email}"/>
+			            </p:column>
+			            
+			            <p:column headerText="Ações" width="78">
+			            	<p:commandButton action="#{bean.excluir}"  icon="pi pi-trash" title="Deletar Usuário" update="tabelaPessoa" process="@this">
+			            		<f:setPropertyActionListener value="#{p}" target="#{bean.pessoa}"/>
+			            	</p:commandButton>
+			            	
+			            	<p:button  icon="pi pi-user-edit" title="Alterar Usuário"/>
+			            </p:column>
+		        </p:dataTable>	
+			</p:tab>
+		
+		</p:tabView>	
+	</h:form>
+	
+	<footer> 
+		<a href="https://www.github.com/nefiF" 
+		target="_blank" 
+		title="GitHub - Néfi Fernandes">
+		Desenvolvido por Néfi Fernandes - 2021</a> 
+	</footer>	
+	
+</h:body>
+</html>
